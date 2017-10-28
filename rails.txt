@@ -1,0 +1,23 @@
+about Rails
+新規作成 rails new ()
+仮想サーバ rails server 
+viewsの作成 rails generate controller (home) (top)
+投稿に関するものを作るとき rails generate controller (posts) (top)
+Views = html部分
+Controller =  viewsをブラウザに返す機能
+Ex) xxx_controller.rないの@@関数が views/xxx/@@.html.rbに相当
+routing = 送信されたURLに対して「どのコントローラの、どのアクション」で処理するかを決める「対応表」 configにある
+DB作成
+Ex) rails g model Post content:text (それぞれ モデル名 カラム名:データ型)
+仮想サーバー上でのmigrate
+Rails db:migrate
+DBへの要素の追加
+Rails consoleでコンソール起動 (quit)
+ex) post = Post.new(content:”Hello World”)
+    post.save
+でテーブルに保存 
+保存した一番最初の要素の取り出し(内容表示)
+Post.first(.content)
+データを使用するにはpost_controller.rbの関数で呼び出そう
+
+7/12
