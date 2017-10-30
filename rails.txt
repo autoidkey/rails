@@ -22,3 +22,8 @@ Post.first(.content)
 
 7/12
 tcp://0.0.0.0:3000 でなっているが http://localhost:3000/です
+
+******************************
+Routes.rb内の
+root 'controller_name#action_name'
+は name_controller.rbのaction_name関数を呼び出す
