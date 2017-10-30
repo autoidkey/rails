@@ -21,3 +21,4 @@ Post.first(.content)
 データを使用するにはpost_controller.rbの関数で呼び出そう
 
 7/12
+tcp://0.0.0.0:3000 でなっているが http://localhost:3000/です
