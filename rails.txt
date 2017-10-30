@@ -22,3 +22,4 @@ Post.first(.content)
 
 7/12
 tcp://0.0.0.0:3000 でなっているが http://localhost:3000/です
+test
