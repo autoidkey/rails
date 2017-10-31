@@ -29,10 +29,13 @@ Routes.rb内の
 root 'controller_name#action_name'
 は name_controller.rbのaction_name関数を呼び出す
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 test
 >>>>>>> origin/master
 =======
+=======
+>>>>>>> home
 
 
 
@@ -91,5 +94,9 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+<<<<<<< HEAD
+=end
+>>>>>>> home
+=======
 =end
 >>>>>>> home
