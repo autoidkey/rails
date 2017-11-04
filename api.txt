@@ -1,0 +1,109 @@
+GET, POSTというのは、仕様で取り決められたHTTPメソッドというものの一部です
+サーバへのリクエストの送り方が違う
+GETはURLに付加してリクエストします
+
+GET: /foo/bar?p=........&u=.........
+POSTはBodyに含めてリクエストします。
+
+POST: /foo/bar
+param:p:...........,u.........
+GETはURLに直接付加するので目でパラメータを見ることができます。
+POSTはBodyに含めるので目で見ることはできません。
+
+GETはなにかを取得するときに使うべきものです。
+POSTはなにかを新しく登録するときに使うものです。
+
+***********************************************
+rails5.0.0からactiverecord::base は applicationrecordに置換?
+まあapplicationrecordは自分の環境でもactiverecord::baseを継承してるしそのままで
+
+関連付け (association)
+2つのモデルの間につながりがあることを明示的にRailsに対して宣言することができ、それによってモデルの操作を一貫させることができます。(らしい)
+belongs_to
+他方のモデルとの間に「1対1」のつながりが設定されます
+
+has_many
+他のモデルとの間に「1対多」のつながりがあることを示します。指定するときは複数系(sをつける)
+has_many :through関連付けは、他方のモデルと「多対多」のつながりを設定する場合によく使われます。この関連付けは、2つのモデルの間に「第3のモデル」(結合モデル)が介在する点が特徴です。
+
+*************************************
+user.rb
+
+class User < ActiveRecord::Base
+  has_many :user_follows, class_name: "UserFollow", foreign_key: :user_id
+  has_many :follows, through: :user_follows
+  has_many :user_followers, class_name: "UserFollow", foreign_key: :follow_id
+  has_many :followers, through: :user_followers
+end
+
+user_follow.rb
+
+class UserFollow < ActiveRecord::Base
+  belongs_to :follow, class_name: "User", foreign_key: follow_id
+  belongs_to :follower, class_name: "USer", foreign_key: user_id
+end
+こんな感じになりますよね．
+
+
+class_nameは対象となるモデルを指定して，foreign_keyで，どのカラムの値が一致するレコードを取得するのかを指定します．
+
+user_followsに関して言うなら，あるuserのid値が，UserFollowのuser_idカラムの値と一致するレコードを取り出します．
+followsに関しては，そのuser_followsをthroughするわけですね．
+
+ではfollowsはどこで指定されるのか？
+UserFollowの定義で指定されます．
+
+belongs_to :follow, class_name: "User", foreign_key: follow_id
+このようにして，今度は，選択されたUserFollowのレコードのfollow_idの値が，class_nameで指定されたUserテーブルのid値と一致する，Userテーブルのレコードを，followとして抜き出します．
+
+Userモデルはそれをhas_manyするのでfollowsという複数形になっているわけです．
+
+http://h3poteto.hatenablog.com/entry/2014/06/15/231742
+**************************************
+Validates
+バリデーションはオブジェクトがDBに保存される前に、そのデータが正しいかどうかを検証する仕組み
+
+Scope
+「共通的に使うクエリをスコープ」として定義できます。
+# 定義方法1: scopeメソッドで定義
+class Post < ActiveRecord::Base
+  scope :published, -> { where(published: true) }
+end
+
+# 定義方法2: クラスメソッドのように定義
+class Post < ActiveRecord::Base
+  def self.published
+    where(published: true)
+  end
+end
+
+scopeメソッドに引数を渡すこともできます。
+# app/modes/post.rb
+class Post < ActiveRecord::Base
+  scope :created_before, ->(time) { where("created_at < ?", time) }
+end
+
+# 使用方法
+Post.created_before(Time.local(2011)) #=> 2011年より前に作成されたPostレコードを取得
+
+Render
+Action内で、呼び出すViewを指定するメソッド。そのAction内で@〜〜(インスタンス変数)として格納されたものは、Viewからrubyの構文で呼び出せます。
+呼び出すViewの形式は、RHTML形式です。
+render json: ~ とか
+
+Resource
+リソースフルな書き方を適用することで、コントローラーに対応する、index、show、new、edit、create、update、destryアクションを個別に宣言しなくても一行で定義できる
+
+namespace
+パスをグループ化
+https://techracho.bpsinc.jp/baba/2014_03_03/15619
+
+**********************
+わかったこと
+Railsには参照するときに複数形にしないといけないところがある 
+
+
+(method)
+Routes.rbの関数呼び出しでjson形式を返すようにすればok
+
+とりあえず render で値を返してみる
