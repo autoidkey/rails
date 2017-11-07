@@ -6,6 +6,7 @@ about Rails
 viewsの作成 rails generate controller (home) (top)
 投稿に関するものを作るとき rails generate controller (posts) (top)
 Views = html部分
+#2つ目以降は基本的に手動で作成
 Controller =  viewsをブラウザに返す機能
 Ex) xxx_controller.rないの@@関数が views/xxx/@@.html.rbに相当
 routing = 送信されたURLに対して「どのコントローラの、どのアクション」で処理するかを決める「対応表」 configにある
